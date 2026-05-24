@@ -106,7 +106,6 @@ jobs:
             c_compiler: cl
           - os: ubuntu-latest
             c_compiler: clang
-            cpp_compiler: clang++
 
     steps:
       - name: Install Qt
