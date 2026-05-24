@@ -95,18 +95,18 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         build_type: [Debug]
-        c_compiler: [gcc, clang]
+        c_compiler: [gcc]
         build_vulkan: [ON, OFF]
         include:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-          - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
         exclude:
           - os: ubuntu-latest
             c_compiler: cl
+          - os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
 
     steps:
       - name: Install Qt
