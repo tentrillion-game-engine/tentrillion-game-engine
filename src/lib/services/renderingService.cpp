@@ -6,8 +6,10 @@
 #include "SDL3/SDL_vulkan.h"
 #include "tentrillion.hpp"
 #include "tentrillionService.hpp"
+#ifdef TENTRILLION_BACKEND_VULKAN
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_core.h>
+#endif
 
 namespace TenTrillionGameEngine {
 RenderingService::RenderingService(const Vector windowSize,
