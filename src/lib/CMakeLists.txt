@@ -8,10 +8,11 @@ set(SOURCE_FILES
 )
 set(SDL_TEST OFF CACHE BOOL "Disable SDL test library" FORCE)
 
-find_package(Vulkan REQUIRED)
-find_package(OpenGL REQUIRED)
-option(TENTRILLION_BACKEND_VULKAN "Use the Vulkan backend. Toggle OFF for OpenGL." ON)
+if(TENTRILLION_BACKEND_VULKAN)
+        find_package(Vulkan REQUIRED)
+endif(TENTRILLION_BACKEND_VULKAN)
 
+find_package(OpenGL REQUIRED)
 add_library(${LIBRARY_NAME} SHARED ${SOURCE_FILES})
 
 target_include_directories(${LIBRARY_NAME} PUBLIC
