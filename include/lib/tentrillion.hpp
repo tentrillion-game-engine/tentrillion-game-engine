@@ -1,5 +1,3 @@
-
-#include "services/backends/vulkanBackendManagerService.hpp"
 #ifndef TENTRILLIONGAMEENGINE_TENTRILLION_H
 
 #include "services/renderingService.hpp"

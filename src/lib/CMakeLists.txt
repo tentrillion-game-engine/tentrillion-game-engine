@@ -4,10 +4,6 @@ set(SOURCE_FILES
         tentrillionService.cpp
         services/renderingService.cpp
         services/textureService.cpp
-        services/backends/vulkanBackendManagerService.cpp
-        services/backends/openGlBackendManagerService.cpp
-        services/backends/renderingBackend.cpp
-        services/backends/softwareBackendManager.cpp
         math/vectorMath.cpp
 )
 set(SDL_TEST OFF CACHE BOOL "Disable SDL test library" FORCE)
