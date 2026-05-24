@@ -47,8 +47,8 @@ jobs:
           submodules: recursive
 
       - if: matrix.build_vulkan == 'ON'
-        name: Install Vulkan SDK
-        uses: jakoch/install-vulkan-sdk-action@v1
+        name: Setup Vulkan SDK
+        uses: humbletim/setup-vulkan-sdk@v1.2.1
 
       - name: Set reusable strings
         id: strings
@@ -112,8 +112,8 @@ jobs:
           submodules: recursive
 
       - if: matrix.build_vulkan == 'ON'
-        name: Install Vulkan SDK
-        uses: jakoch/install-vulkan-sdk-action@v1
+        name: Setup Vulkan SDK
+        uses: humbletim/setup-vulkan-sdk@v1.2.1
 
       - name: Install dependencies on Linux
         if: runner.os == 'Linux'
@@ -197,8 +197,8 @@ jobs:
           submodules: recursive
 
       - if: matrix.build_vulkan == 'ON'
-        name: Install Vulkan SDK
-        uses: jakoch/install-vulkan-sdk-action@v1
+        name: Setup Vulkan SDK
+        uses: humbletim/setup-vulkan-sdk@v1.2.1
 
       - name: Set reusable strings
         id: strings
