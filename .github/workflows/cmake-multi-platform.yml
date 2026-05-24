@@ -46,7 +46,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Vulkan SDK
+      - if: matrix.build_vulkan == 'ON'
+        name: Install Vulkan SDK
         uses: jakoch/install-vulkan-sdk-action@v1
         with:
           optional_components: com.lunarg.vulkan.vma
@@ -118,7 +119,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Vulkan SDK
+      - if: matrix.build_vulkan == 'ON'
+        name: Install Vulkan SDK
         uses: jakoch/install-vulkan-sdk-action@v1
         with:
           optional_components: com.lunarg.vulkan.vma
@@ -209,7 +211,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Install Vulkan SDK
+      - if: matrix.build_vulkan == 'ON'
+        name: Install Vulkan SDK
         uses: jakoch/install-vulkan-sdk-action@v1
         with:
           optional_components: com.lunarg.vulkan.vma
