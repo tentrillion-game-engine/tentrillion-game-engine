@@ -10,8 +10,10 @@ set(SDL_TEST OFF CACHE BOOL "Disable SDL test library" FORCE)
 
 find_package(Vulkan REQUIRED)
 find_package(OpenGL REQUIRED)
+option(TENTRILLION_BACKEND_VULKAN "Use the Vulkan backend. Toggle OFF for OpenGL." ON)
 
 add_library(${LIBRARY_NAME} SHARED ${SOURCE_FILES})
+
 target_include_directories(${LIBRARY_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/lib/services>
@@ -24,10 +26,27 @@ target_link_libraries(${LIBRARY_NAME} PUBLIC
         $<BUILD_INTERFACE:SDL3_image::SDL3_image>
         $<BUILD_INTERFACE:SDL3_mixer::SDL3_mixer>
         $<BUILD_INTERFACE:nlohmann_json::nlohmann_json>
-        $<BUILD_INTERFACE:Vulkan::Vulkan>
-        $<BUILD_INTERFACE:OpenGL::GL>
+        $<$<BOOL:${TENTRILLION_BACKEND_VULKAN}>:$<BUILD_INTERFACE:Vulkan::Vulkan>>
+        $<$<NOT:$<BOOL:${TENTRILLION_BACKEND_VULKAN}>>:$<BUILD_INTERFACE:OpenGL::GL>>
 )
-generate_export_header(${LIBRARY_NAME} EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/tentrillion_export.h")
+
+# Add definitions if the project is compiling for VULKAN targets.
+
+if(TENTRILLION_BACKEND_VULKAN)
+        target_compile_definitions(${LIBRARY_NAME} PUBLIC
+                TENTRILLION_BACKEND_VULKAN
+        )
+endif()
+
+
+generate_export_header(${LIBRARY_NAME} 
+        EXPORT_FILE_NAME "${CMAKE_BINARY_DIR}/tentrillion_export.h"
+)
+
+
+
+# CMake Instructions for installing to other projects.
+
 install(TARGETS ${LIBRARY_NAME}
         EXPORT TenTrillionTargets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
