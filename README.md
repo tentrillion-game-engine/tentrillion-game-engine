@@ -39,6 +39,12 @@ cmake --build build # You can name it just 'build' to be simple.
 Since the SDK is just one library file, you have built the TenTrillion. For easier usage, It is recommended for you to
 use the pre-compiled libraries in the 'Releases' section.
 
+## CPack Information
+
+- This section uses tar.gz, zip, deb, rpm for the Linux platform.
+- This section uses tar.gz, zip, Nullsoft Install System for the Windows platform.
+- ***This section, due to only being an SDK, doesn't have an installer for the macOS platform!***
+
 ## License
 
 This project uses the MIT License. Check out the [LICENSE](LICENSE) file for more information.
