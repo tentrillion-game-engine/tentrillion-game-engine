@@ -5,6 +5,7 @@
 cmake_minimum_required(VERSION 3.16.0)
 set(PROJECT_NAME TenTrillionGameEngine)
 set(TENTEST_UTILITY_PROJECT_NAME TenTrillionTenTest)
+
 project(${PROJECT_NAME} VERSION 0.1.0 LANGUAGES CXX C)
 set(TENTRILLION_PACKAGE_NAME "tentrillionsdk")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
