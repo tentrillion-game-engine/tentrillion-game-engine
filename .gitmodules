@@ -1,0 +1,9 @@
+[submodule "libs/Vulkan-Headers"]
+	path = libs/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "libs/volk"]
+	path = libs/volk
+	url = https://github.com/zeux/volk.git
+[submodule "glfw"]
+	path = libs/glfw
+	url = https://github.com/glfw/glfw.git
