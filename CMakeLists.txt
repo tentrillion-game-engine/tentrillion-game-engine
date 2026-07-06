@@ -47,7 +47,8 @@ generate_export_header(
 target_link_libraries(${PROJECT_NAME} PRIVATE
         volk
         OpenGL::GL
-        OpenCL::OpenCL
+        # OpenCL::OpenCL
+        # OpenCL support is for later.
         glfw
 )
 target_include_directories(${PROJECT_NAME} PUBLIC
