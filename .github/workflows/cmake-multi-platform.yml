@@ -55,6 +55,19 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+      - uses: openrndr/setup-opengl@v1.1
+
+      - name: Install OpenAL (Linux)
+        if: runner.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libopenal-dev openal-soft
+
+      - name: Install OpenAL Soft via vcpkg
+        if: runner.os == 'windows-latest'
+        run: vcpkg install openal-soft
+
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
@@ -66,6 +79,6 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-      # - name: CPack
-      #  working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      #  run: cpack
+        # - name: CPack
+        #  working-directory: ${{ steps.strings.outputs.build-output-dir }}
+        #  run: cpack

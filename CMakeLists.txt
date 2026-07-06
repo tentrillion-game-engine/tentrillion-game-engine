@@ -18,7 +18,7 @@ include(GNUInstallDirs)
 
 # Required dependencies for the TenTrillion's AUDIO, GRAPHICS and PROCESSING dependencies.
 find_package(OpenGL REQUIRED)
-find_package(OpenCL REQUIRED)
+# find_package(OpenCL REQUIRED)
 find_package(OpenAL REQUIRED)
 
 add_subdirectory(libs/volk)
