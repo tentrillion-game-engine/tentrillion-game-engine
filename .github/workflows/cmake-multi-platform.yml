@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       # Set fail-fast to false, so it ensures that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
@@ -23,13 +23,10 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
-        build_type: [ Release ]
+        os: [ ubuntu-latest ]
+        build_type: [ Debug ]
         c_compiler: [ gcc, clang, cl ]
         include:
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
@@ -37,10 +34,6 @@ jobs:
             c_compiler: clang
             cpp_compiler: clang++
         exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
 
@@ -55,21 +48,7 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      - name: Download and Extract Mesa3D for Software Rendering, for Windows
-        if: runner.os == 'Windows'
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri "https://github.com" -OutFile "mesa3d.7z"
-          
-          7z x mesa3d.7z -oMesaOutput
-          
-          # Replace 'build/' with your actual output directory path
-          mkdir -p ${{ steps.strings.outputs.build-output-dir }}
-          copy MesaOutput/x64/opengl32.dll ${{ steps.strings.outputs.build-output-dir }}/
-          copy MesaOutput/x64/libglapi.dll ${{ steps.strings.outputs.build-output-dir }}/
-
       - name: Install OpenGL Dependencies for Linux
-        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -80,15 +59,9 @@ jobs:
             libglfw3-dev
 
       - name: Install OpenAL (Linux)
-        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libopenal-dev openal-soft
-
-      - name: Install OpenAL Soft via vcpkg
-        if: runner.os == 'Windows'
-        run: vcpkg install openal-soft
-
+          sudo apt-get install -y libopenal-dev
 
       - name: Configure CMake
         run: >
