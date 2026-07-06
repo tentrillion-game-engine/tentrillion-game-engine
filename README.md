@@ -17,8 +17,9 @@ Along with taking full advantage of the user's GPU and CPU with OpenCL.
 
 - Vulkan *(Optional, If your system doesn't support Vulkan, the TenTrillion will use the OpenGL renderer.)*
 - OpenGL
-- OpenCL
 - OpenAL
+
+These require the packages to be installed on your system!
 
 > [!NOTE]
 > You don't have to install GLFW, VulkanHeaders or volk manually. They will be provided by the git submodules.
