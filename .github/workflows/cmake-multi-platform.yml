@@ -57,7 +57,8 @@ jobs:
             xorg-dev \
             xvfb \
             libglfw3-dev \
-            xkbcommon
+            libxkbcommon-dev \
+            libxkbcommon-x11-dev
 
       - name: Install OpenAL (Linux)
         run: |
