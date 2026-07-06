@@ -55,7 +55,29 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      - uses: openrndr/setup-opengl@v1.1
+      - name: Download and Extract Mesa3D for Software Rendering, for Windows
+        if: runner.os == 'windows-latest'
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://github.com" -OutFile "mesa3d.7z"
+          
+          7z x mesa3d.7z -oMesaOutput
+          
+          # Replace 'build/' with your actual output directory path
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}
+          copy MesaOutput/x64/opengl32.dll ${{ steps.strings.outputs.build-output-dir }}/
+          copy MesaOutput/x64/libglapi.dll ${{ steps.strings.outputs.build-output-dir }}/
+
+      - name: Install OpenGL Dependencies for Linux
+        if: runner.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev \
+            xorg-dev \
+            xvfb \
+            libglfw3-dev
 
       - name: Install OpenAL (Linux)
         if: runner.os == 'ubuntu-latest'
