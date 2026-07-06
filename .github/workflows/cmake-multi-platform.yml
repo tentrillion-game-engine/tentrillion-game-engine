@@ -56,7 +56,7 @@ jobs:
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
       - name: Download and Extract Mesa3D for Software Rendering, for Windows
-        if: runner.os == 'windows-latest'
+        if: runner.os == 'Windows'
         shell: powershell
         run: |
           Invoke-WebRequest -Uri "https://github.com" -OutFile "mesa3d.7z"
@@ -69,7 +69,7 @@ jobs:
           copy MesaOutput/x64/libglapi.dll ${{ steps.strings.outputs.build-output-dir }}/
 
       - name: Install OpenGL Dependencies for Linux
-        if: runner.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -80,13 +80,13 @@ jobs:
             libglfw3-dev
 
       - name: Install OpenAL (Linux)
-        if: runner.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libopenal-dev openal-soft
 
       - name: Install OpenAL Soft via vcpkg
-        if: runner.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: vcpkg install openal-soft
 
 
