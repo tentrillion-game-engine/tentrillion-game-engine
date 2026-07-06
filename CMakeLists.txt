@@ -11,6 +11,7 @@ set(TENTRILLION_PACKAGE_NAME "tentrillionsdk")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 11)
 
 include(GenerateExportHeader)
 include(GNUInstallDirs)
@@ -30,14 +31,18 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(libs/glfw)
 
 set(ENGINE_TARGETS
-        src/tentrillion-game-engine.cpp
+        src/Main.cpp
+        src/LoggingSystem.cpp
+        src/rendering/RenderingService.cpp
+        src/rendering/vulkano/Vulkano.cpp
+        src/rendering/tengl/TenGL.cpp
 )
 
 # Initialization of the TenTrillion Library.
 add_library(${PROJECT_NAME} SHARED ${ENGINE_TARGETS})
 generate_export_header(
         ${PROJECT_NAME}
-        EXPORT_FILE_NAME "tentrillion-game-engine-export.h"
+        EXPORT_FILE_NAME "TenTrillionGameEngineExport.h"
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
         volk
@@ -46,9 +51,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         glfw
 )
 target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
         $<INSTALL_INTERFACE:include>
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # Add TenTrillion TenTest.
