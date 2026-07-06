@@ -66,6 +66,6 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-      - name: CPack
-        working-directory: ${{ steps.strings.outputs.build-output-dir }}
-        run: cpack
+      # - name: CPack
+      #  working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      #  run: cpack
