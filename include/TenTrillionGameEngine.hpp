@@ -30,7 +30,7 @@ class TENTRILLIONGAMEENGINE_EXPORT TenTrillionGameEngine {
 	/**
 	 * De-Initialize the engine.
 	 */
-	void DeInitialize();
+	void DeInitialize() const;
 	/**
 	 * Get the LoggingSystem's pointer.
 	 * @return LoggingSystem Pointer.

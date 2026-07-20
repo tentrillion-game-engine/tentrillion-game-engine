@@ -21,6 +21,7 @@ void SetEngineErrorHandler() {
 #ifdef WIN32
 
 #endif
+		std::abort();
 	});
 }
 } // namespace TenTrillion

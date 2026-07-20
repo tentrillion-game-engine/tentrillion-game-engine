@@ -39,11 +39,12 @@ set(ENGINE_TARGETS
         src/rendering/tengl/TenGL.cpp
         src/rendering/TenWindow.cpp
         src/handlers/TenEngineConfiguration.cpp
-        include/handlers/TenEngineConfiguration.hpp
         src/handlers/TenEngineErrorHandler.cpp
         include/handlers/TenEngineErrorHandler.hpp
         src/additional/TenString.cpp
         include/additional/TenString.hpp
+        src/rendering/vulkano/VulkanoDeviceManager.cpp
+        include/rendering/vulkano/VulkanoDeviceProperties.hpp
 )
 
 # Initialization of the TenTrillion Library.
@@ -52,6 +53,12 @@ generate_export_header(
         ${PROJECT_NAME}
         EXPORT_FILE_NAME "TenTrillionGameEngineExport.h"
 )
+if (TENDEBUG)
+    target_compile_definitions(
+            ${PROJECT_NAME}
+            TENDEBUG
+    )
+endif ()
 target_link_libraries(${PROJECT_NAME} PRIVATE
         volk
         OpenGL::GL

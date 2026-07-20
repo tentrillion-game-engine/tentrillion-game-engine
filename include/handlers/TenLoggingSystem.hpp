@@ -14,7 +14,21 @@ class TENTRILLIONGAMEENGINE_EXPORT TenLoggingSystem {
 
 	void Log(LogLevel level, const char *message);
 
+	/**
+	 * Get the current logging system instance.
+	 * @return The current pointer to the logger.
+	 */
+	static TenLoggingSystem *GetTenLoggingSystem();
+
   private:
+	/**
+	 * The current logging system instance.
+	 */
+	static TenLoggingSystem *TenLoggingSystemInstance;
+
+	/**
+	 * The current log file.
+	 */
 	std::ofstream logFile;
 
 	/**

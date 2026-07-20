@@ -44,7 +44,14 @@ void TenRenderingService::InitializeService() {
 		exit(2);
 	}
 	this->InitializeRenderingBackend();
-	this->tenWindow->InitializeWindow();
+	// After initializing the TenTrillion backend, initialize the window.
+	tenWindow->InitializeWindow();
+}
+
+TenRenderingService *TenRenderingService::RenderingService;
+
+TenRenderingService *TenRenderingService::GetRenderingService() {
+	return RenderingService;
 }
 
 // These are for keeping the engine beginner-friendly, but also easily

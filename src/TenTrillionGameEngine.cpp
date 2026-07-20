@@ -23,9 +23,9 @@ void TenTrillionGameEngine::InitializeAllServices() {
 	this->renderingService->InitializeService();
 }
 
-void TenTrillionGameEngine::DeInitialize() {
+void TenTrillionGameEngine::DeInitialize() const {
 	// De-Initialize the rendering service.
 	this->renderingService->DeInitializeService();
-	delete this->renderingService;
+	std::free(this->renderingService);
 }
 } // namespace TenTrillion

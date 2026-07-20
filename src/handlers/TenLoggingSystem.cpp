@@ -10,6 +10,7 @@
 namespace TenTrillion {
 TenLoggingSystem::TenLoggingSystem() {
 	this->logFile = std::ofstream("current.log");
+	TenLoggingSystemInstance = this;
 
 	if (!this->logFile) {
 		std::cerr << "Failed to create logging subsystem! Stopping...";
@@ -27,6 +28,11 @@ const char *TenLoggingSystem::returnLogName(const LogLevel level) {
 		return "ERROR";
 	}
 	return "UNIDENTIFIED";
+}
+
+TenLoggingSystem *TenLoggingSystem::TenLoggingSystemInstance;
+TenLoggingSystem *TenLoggingSystem::GetTenLoggingSystem() {
+	return TenLoggingSystemInstance;
 }
 
 void TenLoggingSystem::returnCurrentLogTime(const char *buffer) {

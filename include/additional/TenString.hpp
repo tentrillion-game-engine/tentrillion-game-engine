@@ -48,14 +48,6 @@ class TENTRILLIONGAMEENGINE_EXPORT TenString {
 	 */
 	explicit TenString(std::string &data);
 
-#ifdef __linux__
-	/**
-	 * Return the std::string associated with this TenString.
-	 * @return The speficified string.
-	 */
-	std::string getString();
-#endif
-
 	[[nodiscard]] const char *getCString() const;
 
 #ifdef WIN32
@@ -70,15 +62,19 @@ class TENTRILLIONGAMEENGINE_EXPORT TenString {
 	 * @return The specified widestring.
 	 */
 	std::wstring getString();
+#else
+	/**
+	 * Return the std::string associated with this TenString.
+	 * @return The speficified string.
+	 */
+	std::string getString();
 #endif
 
   private:
-#ifdef __linux__
-	char *data;
-#endif
-
 #ifdef WIN32
 	wchar_t *data;
+#else
+	char *data;
 #endif
 };
 } // namespace TenTrillion
