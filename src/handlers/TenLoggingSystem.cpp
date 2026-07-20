@@ -1,6 +1,6 @@
 
 
-#include "LoggingSystem.hpp"
+#include "handlers/TenLoggingSystem.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace TenTrillion {
-LoggingSystem::LoggingSystem() {
+TenLoggingSystem::TenLoggingSystem() {
 	this->logFile = std::ofstream("current.log");
 
 	if (!this->logFile) {
@@ -17,7 +17,7 @@ LoggingSystem::LoggingSystem() {
 	}
 }
 
-const char *LoggingSystem::returnLogName(const LogLevel level) {
+const char *TenLoggingSystem::returnLogName(const LogLevel level) {
 	switch (level) {
 	case INFO:
 		return "INFO";
@@ -29,7 +29,7 @@ const char *LoggingSystem::returnLogName(const LogLevel level) {
 	return "UNIDENTIFIED";
 }
 
-void LoggingSystem::returnCurrentLogTime(const char *buffer) {
+void TenLoggingSystem::returnCurrentLogTime(const char *buffer) {
 	char timeBuffer[100];
 
 	const auto time = std::time(nullptr);
@@ -41,7 +41,7 @@ void LoggingSystem::returnCurrentLogTime(const char *buffer) {
 	strncpy(timeBuffer, buffer, sizeof(timeBuffer));
 }
 
-void LoggingSystem::Log(const LogLevel level, const char *message) {
+void TenLoggingSystem::Log(const LogLevel level, const char *message) {
 	char logBuffer[255];
 	char timeBuffer[100];
 

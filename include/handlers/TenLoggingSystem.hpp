@@ -6,11 +6,11 @@
 #include <fstream>
 
 namespace TenTrillion {
-class TENTRILLIONGAMEENGINE_EXPORT LoggingSystem {
+class TENTRILLIONGAMEENGINE_EXPORT TenLoggingSystem {
   public:
 	enum LogLevel { INFO, WARNING, ERROR };
 
-	LoggingSystem();
+	TenLoggingSystem();
 
 	void Log(LogLevel level, const char *message);
 

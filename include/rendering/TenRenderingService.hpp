@@ -3,10 +3,11 @@
 #ifndef TENTRILLIONGAMEENGINE_TENTRILLIONRENDERING_HPP
 #define TENTRILLIONGAMEENGINE_TENTRILLIONRENDERING_HPP
 
-#include <BaseService.hpp>
+#include "TenWindow.hpp"
+
+#include <TenBaseService.hpp>
 #include <TenTrillionGameEngineExport.h>
 #include <functional>
-#include <memory>
 
 namespace TenTrillion {
 class TenGL;
@@ -17,13 +18,16 @@ class Vulkano;
  * here, as the initializer will reference the commands in the backend to the
  * specified function.
  */
-class TENTRILLIONGAMEENGINE_EXPORT RenderingService : BaseService {
+class TENTRILLIONGAMEENGINE_EXPORT TenRenderingService : TenBaseService {
+  public:
+	/**
+	 * The rendering backend enums for the TenTrillion.
+	 */
 	enum RenderingBackend { VULKAN, OPENGL, SOFTWARE, NO_RENDER };
 
-  public:
-	~RenderingService() override = default;
-	explicit RenderingService(Main *engineReference)
-		: BaseService(engineReference) {}
+	~TenRenderingService() override = default;
+	explicit TenRenderingService(TenTrillionGameEngine *engineReference)
+		: TenBaseService(engineReference) {}
 
 	void InitializeService() override;
 	void DeInitializeService() override;
@@ -46,6 +50,12 @@ class TENTRILLIONGAMEENGINE_EXPORT RenderingService : BaseService {
 	 */
 	RenderingBackend &GetRenderingBackend();
 
+	/**
+	 * Get the current TenWindow.
+	 * @return TenWindow.
+	 */
+	[[nodiscard]] TenWindow *GetTenWindow() const;
+
   private:
 	/**
 	 * The current rendering backend.
@@ -65,6 +75,11 @@ class TENTRILLIONGAMEENGINE_EXPORT RenderingService : BaseService {
 	 * later.
 	 */
 	TenGL *tenGL{nullptr};
+
+	/**
+	 * This windowing system of the TenTrillion.
+	 */
+	TenWindow *tenWindow{nullptr};
 
 	/**
 	 * This creates the function pointer link that the Vulkano/Vulkan backend

@@ -7,3 +7,6 @@
 [submodule "glfw"]
 	path = libs/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "json"]
+	path = libs/json
+	url = https://github.com/nlohmann/json.git

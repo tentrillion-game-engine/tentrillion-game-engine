@@ -1,28 +1,30 @@
 
 
-#include "rendering/RenderingService.hpp"
+#include "rendering/TenRenderingService.hpp"
 
 #include "GLFW/glfw3.h"
-#include "Main.hpp"
+#include "TenTrillionGameEngine.hpp"
 #include "rendering/tengl/TenGL.hpp"
 #include "rendering/vulkano/Vulkano.hpp"
 #include "volk.h"
 
 namespace TenTrillion {
-void RenderingService::InitializeService() {
-	LoggingSystem *loggingSystem = this->GameEngine->GetLoggingSystem();
+void TenRenderingService::InitializeService() {
+	this->tenWindow = new TenWindow(this);
+
+	TenLoggingSystem *loggingSystem = this->GameEngine->GetLoggingSystem();
 	this->renderingBackend = VULKAN;
 
-	glfwSetErrorCallback(Main::GLFWErrorCallback);
+	glfwSetErrorCallback(TenTrillionGameEngine::GLFWErrorCallback);
 	if (!glfwInit()) {
-		loggingSystem->Log(LoggingSystem::ERROR,
+		loggingSystem->Log(TenLoggingSystem::ERROR,
 						   "Failed to initialize GLFW, Halting!");
 		exit(1);
 	}
 
 	if (!(volkInitialize() == VK_SUCCESS && glfwVulkanSupported())) {
 		loggingSystem->Log(
-			LoggingSystem::WARNING,
+			TenLoggingSystem::WARNING,
 			"Failed to initialize Vulkan, defaulting to OpenGL.");
 		this->renderingBackend = OPENGL;
 	}
@@ -38,15 +40,17 @@ void RenderingService::InitializeService() {
 		this->createTenGLPassthrough();
 		break;
 	default:
-		loggingSystem->Log(LoggingSystem::ERROR, "");
+		loggingSystem->Log(TenLoggingSystem::ERROR, "");
 		exit(2);
 	}
+	this->InitializeRenderingBackend();
+	this->tenWindow->InitializeWindow();
 }
 
 // These are for keeping the engine beginner-friendly, but also easily
 // controllable too.
 
-void RenderingService::createVulkanoPassthrough() {
+void TenRenderingService::createVulkanoPassthrough() {
 	// Each one for the vulkan functions are referenced here and are
 	// created.
 	this->InitializeRenderingBackend = [&] { vulkano->InitializeService(); };
@@ -55,17 +59,20 @@ void RenderingService::createVulkanoPassthrough() {
 	};
 }
 
-void RenderingService::createTenGLPassthrough() {
+void TenRenderingService::createTenGLPassthrough() {
 	// Each one for the OpenGL functions are referenced here and created.
 	this->InitializeRenderingBackend = [&] { tenGL->InitializeService(); };
 	this->DeInitializeRenderingBackend = [&] { tenGL->DeInitializeService(); };
 }
-RenderingService::RenderingBackend &RenderingService::GetRenderingBackend() {
+TenRenderingService::RenderingBackend &
+TenRenderingService::GetRenderingBackend() {
 	return this->renderingBackend;
 }
+TenWindow *TenRenderingService::GetTenWindow() const { return this->tenWindow; }
 
-void RenderingService::DeInitializeService() {
+void TenRenderingService::DeInitializeService() {
 	// Free up the remaining memory to keep performance.
+	free(this->tenWindow);
 	free(this->vulkano);
 	free(this->tenGL);
 }

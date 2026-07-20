@@ -5,15 +5,16 @@
 #include <TenTrillionGameEngineExport.h>
 
 namespace TenTrillion {
-class Main;
-class TENTRILLIONGAMEENGINE_EXPORT BaseService {
+class TenTrillionGameEngine;
+class TENTRILLIONGAMEENGINE_EXPORT TenBaseService {
 
   public:
-	virtual ~BaseService() = default;
+	virtual ~TenBaseService() {};
 	/**
 	 * Base class for all TenTrillion Services.
 	 */
-	explicit BaseService(TenTrillion::Main *gameEngineReference) {
+	explicit TenBaseService(
+		TenTrillion::TenTrillionGameEngine *gameEngineReference) {
 		this->GameEngine = gameEngineReference;
 	};
 
@@ -37,7 +38,7 @@ class TENTRILLIONGAMEENGINE_EXPORT BaseService {
 	/**
 	 * The reference to the TenTrillionGameEngine class.
 	 */
-	Main *GameEngine;
+	TenTrillionGameEngine *GameEngine;
 };
 } // namespace TenTrillion
 

@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/Vulkan-Headers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libs/json" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/libs/volk" vcs="Git" />
   </component>
 </project>

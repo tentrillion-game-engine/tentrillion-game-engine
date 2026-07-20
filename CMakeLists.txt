@@ -11,7 +11,7 @@ set(TENTRILLION_PACKAGE_NAME "tentrillionsdk")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 include(GenerateExportHeader)
 include(GNUInstallDirs)
@@ -29,13 +29,21 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(libs/glfw)
+add_subdirectory(libs/json)
 
 set(ENGINE_TARGETS
-        src/Main.cpp
-        src/LoggingSystem.cpp
-        src/rendering/RenderingService.cpp
+        src/TenTrillionGameEngine.cpp
+        src/handlers/TenLoggingSystem.cpp
+        src/rendering/TenRenderingService.cpp
         src/rendering/vulkano/Vulkano.cpp
         src/rendering/tengl/TenGL.cpp
+        src/rendering/TenWindow.cpp
+        src/handlers/TenEngineConfiguration.cpp
+        include/handlers/TenEngineConfiguration.hpp
+        src/handlers/TenEngineErrorHandler.cpp
+        include/handlers/TenEngineErrorHandler.hpp
+        src/additional/TenString.cpp
+        include/additional/TenString.hpp
 )
 
 # Initialization of the TenTrillion Library.
@@ -47,6 +55,7 @@ generate_export_header(
 target_link_libraries(${PROJECT_NAME} PRIVATE
         volk
         OpenGL::GL
+        nlohmann_json::nlohmann_json
         # OpenCL::OpenCL
         # OpenCL support is for later.
         glfw
