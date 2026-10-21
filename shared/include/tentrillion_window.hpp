@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 
 class tentrillion_window {
+    public:
+    
 };
 
 

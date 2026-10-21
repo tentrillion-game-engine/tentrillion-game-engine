@@ -9,11 +9,11 @@ project(TenTrillionGameEngine VERSION 0.1.0 LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 11)
 include(GenerateExportHeader)
 include(GNUInstallDirs)
-find_package(OpenGL REQUIRED)
-find_package(OpenAL REQUIRED)
 
-add_subdirectory(libs/volk)
-add_subdirectory(libs/Vulkan-Headers)
+option(TENTRILLION_COMPILE_VULKAN ON) # This is the compiler option for Vulkan.
+option(TENTRILLION_COMPILE_OPENGL ON) # This is the compiler option for OpenGL.
+option(TENTRILLION_COMPILE_COMPAT ON) # This is the compiler option for compatibility.mode. This is a mode that allows
+# Compatibility with tons of Windows platforms.
 
 # Extra GLFW stuff so it doesn't build the documentation, because we don't need it.
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -24,12 +24,4 @@ add_subdirectory(libs/json)
 
 set(SHARED_TARGETS
     shared/src/tentrillion_window.cpp
-)
-
-add_library(TenTrillionCore SHARED ${SHARED_TARGETS})
-target_include_directories(TenTrillionCore PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/shared>
-)
-target_link_libraries(TenTrillionCore PRIVATE
-    glfw
 )
