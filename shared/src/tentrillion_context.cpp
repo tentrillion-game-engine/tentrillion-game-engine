@@ -13,5 +13,9 @@ tentrillion_context::create_context(const char *application_title,
 	tentrillion_window->window_width = window_width;
 	tentrillion_window->window_height = window_height;
 
+#ifdef TENTRILLIONGAMEENGINE_TENVULKAN_HPP
+
+#endif
+
 	return tentrillion_window;
 }
