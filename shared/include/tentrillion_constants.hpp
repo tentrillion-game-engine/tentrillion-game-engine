@@ -2,10 +2,9 @@
 #define TENTRILLIONGAMEENGINE_TENTRILLION_CONSTANTS_HPP
 
 #ifdef TENTRILLION_VULKAN
-#include <volk/volk.h>
-#include <vulkan/vulkan_core.h>
+#include <volk.h>
 
-#define TENTRILLION_VK_VERSION VK_MAKE_VERSION(1, 0, 0);
+#define TENTRILLION_VK_VERSION VK_MAKE_VERSION(0, 0, 1);
 #endif
 
 #define TENTRILLION_VERSION_MAJOR 1
