@@ -1,0 +1,5 @@
+build
+.cache
+
+# Ignore the generate config file.
+tentrillionConfig.h
