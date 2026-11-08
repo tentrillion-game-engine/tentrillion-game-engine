@@ -17,6 +17,6 @@ add_library(${TENTRILLION_VULKAN_LIBRARY} SHARED
 target_include_directories(${TENTRILLION_VULKAN_LIBRARY} PUBLIC
       ${TENTRILLION_SHARED_INCLUDES}
       $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-      $<INSTALL_INTERFACE:/include>
+      $<INSTALL_INTERFACE:/include/vulkan>
 )
 target_link_libraries(${TENTRILLION_VULKAN_LIBRARY} glfw volk::volk)

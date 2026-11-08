@@ -1,6 +1,8 @@
 #ifndef TENTRILLIONGAMEENGINE_TENVULKAN_HPP
 #define TENTRILLIONGAMEENGINE_TENVULKAN_HPP
 
+#include "tenvulkan_device.hpp"
+#include "tenvulkan_queue.hpp"
 #include <cstdint>
 #include <volk.h>
 
@@ -19,9 +21,12 @@ class tenvulkan {
 	tenvulkan(const char *application_name,
 			  const uint32_t &application_version);
 
-	void vk_create_instance(const char *application_name,
+	bool vk_create_instance(const char *application_name,
 							const uint32_t &application_version);
+
 	~tenvulkan();
+
+	VkInstance &get_vk_instance() { return this->vk_instance; }
 
 #ifdef __linux__
 	// Sets if the TenTrillion should acquire the current DRM display.
@@ -31,9 +36,29 @@ class tenvulkan {
 #endif
 
   private:
+	/**
+	 * The current Vulkan device manager. (VkDevice)
+	 */
+	tenvulkan_device *tenvulkan_device_manager;
+
+	/**
+	 * The current Vulkan Queue manager. (VkQueue)
+	 */
+	tenvulkan_queue *tenvulkan_queue;
+
+	/**
+	 * The application information for the Vulkan implementation.
+	 */
 	VkApplicationInfo vk_app_info;
+
+	/**
+	 * This is the information about the Vulkan creation.
+	 */
 	VkInstanceCreateInfo vk_instance_info;
 
+	/**
+	 * The current Vulkan Instance.
+	 */
 	VkInstance vk_instance;
 
 #ifdef __linux__

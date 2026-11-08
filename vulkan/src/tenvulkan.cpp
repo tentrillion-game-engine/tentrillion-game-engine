@@ -1,5 +1,7 @@
 #include "tenvulkan.hpp"
 #include "tentrillion_constants.hpp"
+#include "tenvulkan_device.hpp"
+#include "tenvulkan_queue.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
@@ -19,7 +21,20 @@
 
 tenvulkan::tenvulkan(const char *application_name,
 					 const uint32_t &application_version) {
-	this->vk_create_instance(application_name, application_version);
+	this->tenvulkan_device_manager = new class tenvulkan_device(this);
+	this->tenvulkan_queue =
+		new class tenvulkan_queue(this->tenvulkan_device_manager);
+}
+
+tenvulkan::~tenvulkan() {
+	// Cleanup:
+	// Firstly, tell the TenVulkan Queue to get destroyed, then destroy the
+	// devices.
+
+	std::free(this->tenvulkan_queue);
+	std::free(this->tenvulkan_device_manager);
+
+	vkDestroyInstance(this->vk_instance, nullptr);
 }
 
 bool check_extension(
@@ -34,7 +49,7 @@ bool check_extension(
 			   }) != vk_extension_properties.end();
 }
 
-void tenvulkan::vk_create_instance(const char *application_name,
+bool tenvulkan::vk_create_instance(const char *application_name,
 								   const uint32_t &application_version) {
 	this->vk_app_info =
 		VkApplicationInfo{.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
@@ -106,6 +121,7 @@ void tenvulkan::vk_create_instance(const char *application_name,
 #endif
 		}
 	} else {
+		return false;
 	}
 
 	this->vk_instance_info = VkInstanceCreateInfo{
@@ -124,4 +140,6 @@ void tenvulkan::vk_create_instance(const char *application_name,
 	// Load the Vulkan instance with Volk. This is meant for compatibility and
 	// doesn't really involve optimization.
 	volkLoadInstance(this->vk_instance);
+
+	return true;
 }
