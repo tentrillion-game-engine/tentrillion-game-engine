@@ -22,7 +22,7 @@
 tenvulkan::tenvulkan(const char *application_name,
 					 const uint32_t &application_version) {
 	this->tenvulkan_device_manager = new class tenvulkan_device(this);
-	this->tenvulkan_queue =
+	this->tenvulkan_queue_manager =
 		new class tenvulkan_queue(this->tenvulkan_device_manager);
 }
 
@@ -31,7 +31,7 @@ tenvulkan::~tenvulkan() {
 	// Firstly, tell the TenVulkan Queue to get destroyed, then destroy the
 	// devices.
 
-	std::free(this->tenvulkan_queue);
+	std::free(this->tenvulkan_queue_manager);
 	std::free(this->tenvulkan_device_manager);
 
 	vkDestroyInstance(this->vk_instance, nullptr);

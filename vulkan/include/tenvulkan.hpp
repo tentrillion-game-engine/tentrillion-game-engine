@@ -44,7 +44,7 @@ class tenvulkan {
 	/**
 	 * The current Vulkan Queue manager. (VkQueue)
 	 */
-	tenvulkan_queue *tenvulkan_queue;
+	tenvulkan_queue *tenvulkan_queue_manager;
 
 	/**
 	 * The application information for the Vulkan implementation.

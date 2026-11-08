@@ -28,7 +28,7 @@ class tenvulkan_device {
 	 * TenVulkan reference, must be passed down when constructing the
 	 * tenvulkan_device constructor.
 	 */
-	tenvulkan *tenvulkan;
+	tenvulkan *m_tenvulkan;
 
 	/**
 	 * The current primary VkDevice.
