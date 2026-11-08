@@ -2,7 +2,6 @@
 #include "tenvulkan.hpp"
 #include "tenvulkan_errors.hpp"
 #include <cstdint>
-#include <stdexcept>
 #include <vector>
 
 tenvulkan_device::tenvulkan_device(class tenvulkan *tenvulkan_pointer) {

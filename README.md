@@ -68,4 +68,4 @@ _(The SDL Library will be pre-provided by the TenTrillion and will be compiled a
 
 ## License
 
-This project uses the MIT License. Check out the [LICENSE](LICENSE) file for more information.
+This project uses the GPL v3 License. Check out the [LICENSE](LICENSE) file for more information.

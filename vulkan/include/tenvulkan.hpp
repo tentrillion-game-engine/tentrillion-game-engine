@@ -13,9 +13,11 @@
 class tenvulkan {
 
   public:
-	enum tenvulkan_drm_control {
+	enum class tenvulkan_drm_control {
 		NoControl,
+		// VK_EXT_acquire_drm_display
 		DirectRenderingManagerControl,
+		// VK_EXT_acquire_xlib_display
 		X11DisplayControl
 	};
 
