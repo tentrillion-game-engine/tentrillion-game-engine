@@ -9,6 +9,7 @@ project(TenTrillionGameEngine VERSION 0.1.0 LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(GenerateExportHeader)
+include(ExternalProject)
 include(GNUInstallDirs)
 
 option(TENTRILLION_COMPILE_EDITOR "Compiles the TenTrillion Editor" ON)
@@ -37,4 +38,15 @@ endif()
 
 if(${TENTRILLION_COMPILE_OPENGL})
   add_subdirectory(opengl)
+endif()
+
+if(${TENTRILLION_COMPILE_COMPAT})
+  ExternalProject_Add(compatibility
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/compat
+    DOWNLOAD_COMMAND ""
+    BUILD_IN_SOURCE true
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND make
+    INSTALL_COMMAND make install
+  )
 endif()

@@ -4,7 +4,7 @@
 #include "tenvulkan_device.hpp"
 class tenvulkan_queue {
   public:
-	tenvulkan_queue(tenvulkan_device *tenvulkan_device_manager);
+	tenvulkan_queue(tenvulkan_device *vk_device);
 
   private:
 	tenvulkan_device *tenvulkan_device_manager;

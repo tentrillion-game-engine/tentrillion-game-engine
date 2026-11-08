@@ -3,3 +3,9 @@
 # from scratch in Vulkan, OpenGL, SDL and OpenAL.
 #
 # Copyright (c) 2026 Thefirey33
+
+
+build:
+
+
+install:

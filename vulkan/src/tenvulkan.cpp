@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <tuple>
 #include <vector>
 
@@ -19,11 +20,10 @@
 
 #endif
 
-tenvulkan::tenvulkan(const char *application_name,
-					 const uint32_t &application_version) {
-	this->tenvulkan_device_manager = new class tenvulkan_device(this);
+tenvulkan::tenvulkan() {
+	this->tenvulkan_device_manager = std::make_unique<tenvulkan_device>(this);
 	this->tenvulkan_queue_manager =
-		new class tenvulkan_queue(this->tenvulkan_device_manager);
+		std::make_unique<tenvulkan_queue>(this->tenvulkan_device_manager.get());
 }
 
 tenvulkan::~tenvulkan() {
@@ -31,15 +31,12 @@ tenvulkan::~tenvulkan() {
 	// Firstly, tell the TenVulkan Queue to get destroyed, then destroy the
 	// devices.
 
-	std::free(this->tenvulkan_queue_manager);
-	std::free(this->tenvulkan_device_manager);
-
 	vkDestroyInstance(this->vk_instance, nullptr);
 }
 
 bool check_extension(
 	std::vector<VkExtensionProperties> &vk_extension_properties,
-	const char ext_name[256]) {
+	const char *ext_name) {
 	return std::find_if_not(
 			   vk_extension_properties.begin(), vk_extension_properties.end(),
 			   [&ext_name](
@@ -47,6 +44,42 @@ bool check_extension(
 				   return strcmp(vk_extension_properties.extensionName,
 								 ext_name);
 			   }) != vk_extension_properties.end();
+}
+
+void tenvulkan::vk_select_extensions(
+	std::vector<VkExtensionProperties> &vk_extension_properties,
+	std::vector<const char *> &instance_extensions) {
+	if (auto [is_drm, is_x11_drm] =
+			std::tuple{check_extension(vk_extension_properties,
+									   VK_KHR_DRM_EXTENSION_NAME),
+					   check_extension(vk_extension_properties,
+									   VK_KHR_DRM_X11_EXTENSION_NAME)};
+		!(is_drm || is_x11_drm)) {
+		this->is_acquire_drm = tenvulkan_drm_control::NoControl;
+	} else {
+		if (this->is_acquire_drm ==
+				tenvulkan::tenvulkan_drm_control::X11DisplayControl &&
+			strcmp(std::getenv("XDG_SESSION_TYPE"), "wayland") == 0) {
+			// If the current session is detected as Wayland, do not
+			// use the declining in functionality X11 extension.
+			// For all the other old timers using X11, this
+			// extension will still be supported.
+
+			this->is_acquire_drm =
+				tenvulkan::tenvulkan_drm_control::DirectRenderingManagerControl;
+		}
+
+		switch (this->is_acquire_drm) {
+		case tenvulkan::tenvulkan_drm_control::DirectRenderingManagerControl:
+			instance_extensions.push_back(VK_KHR_DRM_EXTENSION_NAME);
+			break;
+		case tenvulkan::tenvulkan_drm_control::X11DisplayControl:
+			instance_extensions.push_back(VK_KHR_DRM_X11_EXTENSION_NAME);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 bool tenvulkan::vk_create_instance(const char *application_name,
@@ -59,10 +92,10 @@ bool tenvulkan::vk_create_instance(const char *application_name,
 						  .engineVersion = VK_MAKE_VERSION(0, 0, 1),
 						  .apiVersion = VK_API_VERSION_1_3};
 
-	std::vector<const char *> instance_extensions;
+	std::vector<const char *> instance_extensions{};
 
-	uint32_t extension_count{0};
-	if (vkEnumerateInstanceExtensionProperties(nullptr, &extension_count,
+	if (uint32_t extension_count{0};
+		vkEnumerateInstanceExtensionProperties(nullptr, &extension_count,
 											   nullptr) != VK_SUCCESS) {
 		auto vk_extension_properties =
 			std::vector<VkExtensionProperties>(extension_count);
@@ -71,47 +104,9 @@ bool tenvulkan::vk_create_instance(const char *application_name,
 			VK_SUCCESS) {
 
 #ifdef __linux__
-			if (this->is_acquire_drm != tenvulkan_drm_control::NoControl) {
-
-				if (auto [is_drm, is_x11_drm] =
-						std::tuple{
-							check_extension(vk_extension_properties,
-											VK_KHR_DRM_EXTENSION_NAME),
-							check_extension(vk_extension_properties,
-											VK_KHR_DRM_X11_EXTENSION_NAME)};
-					!(is_drm || is_x11_drm)) {
-					this->is_acquire_drm = tenvulkan_drm_control::NoControl;
-				} else {
-					if (this->is_acquire_drm ==
-							tenvulkan::tenvulkan_drm_control::
-								X11DisplayControl &&
-						strcmp(std::getenv("XDG_SESSION_TYPE"), "wayland") ==
-							0) {
-						// If the current session is detected as Wayland, do not
-						// use the declining in functionality X11 extension.
-						// For all the other old timers using X11, this
-						// extension will still be supported.
-
-						this->is_acquire_drm =
-							tenvulkan::tenvulkan_drm_control::
-								DirectRenderingManagerControl;
-					}
-
-					switch (this->is_acquire_drm) {
-					case tenvulkan::tenvulkan_drm_control::
-						DirectRenderingManagerControl:
-						instance_extensions.push_back(
-							VK_KHR_DRM_EXTENSION_NAME);
-						break;
-					case tenvulkan::tenvulkan_drm_control::X11DisplayControl:
-						instance_extensions.push_back(
-							VK_KHR_DRM_X11_EXTENSION_NAME);
-						break;
-					default:
-						break;
-					}
-				}
-			}
+			if (this->is_acquire_drm != tenvulkan_drm_control::NoControl)
+				this->vk_select_extensions(vk_extension_properties,
+										   instance_extensions);
 
 #endif
 			instance_extensions.push_back(VK_KHR_SURFACE_EXTENSION_NAME);

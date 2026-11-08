@@ -1,12 +1,14 @@
 #include "tenvulkan_device.hpp"
 #include "tenvulkan.hpp"
+#include "tenvulkan_errors.hpp"
 #include <cstdint>
 #include <stdexcept>
 #include <vector>
 
 tenvulkan_device::tenvulkan_device(class tenvulkan *tenvulkan_pointer) {
 	if (tenvulkan_pointer == nullptr)
-		throw new std::runtime_error("tenvulkan reference isn't defined.");
+		throw tentrillion_reference_is_null(
+			"tenvulkan reference isn't defined.");
 
 	this->m_tenvulkan = tenvulkan_pointer;
 
