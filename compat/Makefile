@@ -4,6 +4,10 @@
 #
 # Copyright (c) 2026 Thefirey33
 
+CC := gcc
+CFLAGS := -Wall -Wextra -std=c90 -pedantic -Wno-long-long
+LDLIBS := -lSDL -lGL
+
 
 build:
 

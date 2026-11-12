@@ -25,6 +25,7 @@ add_subdirectory(libs/json EXCLUDE_FROM_ALL)
 
 set(TENTRILLION_SHARED_TARGETS
   ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_context.cpp
+  ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_math.cpp
 )
 
 set(TENTRILLION_SHARED_INCLUDES
@@ -50,3 +51,12 @@ if(${TENTRILLION_COMPILE_COMPAT})
     INSTALL_COMMAND make install
   )
 endif()
+
+if(LINUX)
+  if(${TENTRILLION_COMPILE_COMPAT} AND ${TENTRILLION_COMPILE_OPENGL} AND ${TENTRILLION_COMPILE_VULKAN})
+    add_subdirectory(editor)
+  endif()
+elseif(WIN32)
+# TODO
+endif()
+

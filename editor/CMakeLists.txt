@@ -19,5 +19,5 @@ if(WIN32)
 else()
     add_executable(${TENTRILLION_EDITOR_APPLICATION} ${TENTRILLION_EDITOR_TARGETS})
 endif()
-target_link_libraries(${TENTRILLION_EDITOR_APPLICATION} Qt5::Core)
+target_link_libraries(${TENTRILLION_EDITOR_APPLICATION} Qt5::Core ${TENTRILLION_VULKAN_LIBRARY})
 

@@ -13,4 +13,7 @@
 
 #define TENTRILLION_INTERNAL_CODENAME "TenTrillion Game Engine"
 
+#define TENTRILLION_RANGE_CHECK(p, range_start, range_end)                     \
+	((p - range_start) < (range_end - range_start))
+
 #endif
