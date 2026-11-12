@@ -24,8 +24,9 @@ add_subdirectory(libs/glfw EXCLUDE_FROM_ALL)
 add_subdirectory(libs/json EXCLUDE_FROM_ALL)
 
 set(TENTRILLION_SHARED_TARGETS
-  ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_context.cpp
+  ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_window.cpp
   ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_math.cpp
+  ${CMAKE_SOURCE_DIR}/shared/src/tentrillion_math_operators.cpp
 )
 
 set(TENTRILLION_SHARED_INCLUDES

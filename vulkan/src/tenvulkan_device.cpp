@@ -20,10 +20,7 @@ tenvulkan_device::tenvulkan_device(class tenvulkan *tenvulkan_pointer) {
 }
 
 bool tenvulkan_device::vk_create_device() { return true; }
-bool tenvulkan_device::vk_create_device(const int &device_id) {
-	
-	 return true; 
-	}
+bool tenvulkan_device::vk_create_device(const int &device_id) { return true; }
 
 VkPhysicalDevice
 tenvulkan_device::fetch_current_vk_physical_device(const uint32_t &device_id) {
@@ -36,11 +33,11 @@ tenvulkan_device::fetch_current_vk_physical_device(const uint32_t &device_id) {
 
 VkPhysicalDeviceProperties2
 tenvulkan_device::get_device_properties(const uint32_t &device_id) {
-	VkPhysicalDeviceProperties2 vk_physical_properties{
-		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2};
-
 	VkPhysicalDevice physicalDevice =
 		this->fetch_current_vk_physical_device(device_id);
+
+	VkPhysicalDeviceProperties2 vk_physical_properties{
+		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2};
 
 	vkGetPhysicalDeviceProperties2(physicalDevice, &vk_physical_properties);
 	return vk_physical_properties;
