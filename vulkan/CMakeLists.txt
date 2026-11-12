@@ -6,6 +6,8 @@
 
 set(TENTRILLION_VULKAN_TARGETS
       src/tenvulkan.cpp
+      src/tenvulkan_device.cpp
+      src/tenvulkan_queue.cpp
 )
 add_subdirectory(libs/volk EXCLUDE_FROM_ALL)
 
