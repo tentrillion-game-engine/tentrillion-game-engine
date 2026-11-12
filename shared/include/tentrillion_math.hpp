@@ -8,6 +8,10 @@
 
 #include <cmath>
 
+/**
+ * @brief The TenTrillion Basic Math Class.
+ *
+ */
 class tentrillion_basic_math {
   public:
 	/**
