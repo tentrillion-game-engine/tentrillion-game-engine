@@ -13,6 +13,7 @@
 class tenvulkan {
 
   public:
+#ifdef __linux__
 	enum class tenvulkan_drm_control {
 		NoControl,
 		// VK_EXT_acquire_drm_display
@@ -21,6 +22,13 @@ class tenvulkan {
 		X11DisplayControl
 	};
 
+	enum class tenvulkan_windowing_manager {
+		NoWindowingManagerSpecified,
+		XWindowSystem,
+		Wayland
+	};
+#endif
+
 	tenvulkan();
 
 	bool vk_create_instance(const char *application_name,
@@ -28,7 +36,22 @@ class tenvulkan {
 
 	~tenvulkan();
 
+	/**
+	 * @brief Get the Vulkan Instance.
+	 *
+	 * @return VkInstance& Reference to the current Vulkan Instance.
+	 */
 	VkInstance &get_vk_instance() { return this->vk_instance; }
+
+	/**
+	 * @brief Get the current windowing manager.
+	 *
+	 * @return tenvulkan::tenvulkan_windowing_manager& Reference to the enum
+	 * that points out the current windowing manager.
+	 */
+	tenvulkan::tenvulkan_windowing_manager &get_windowing_manager() {
+		return this->windowing_manager;
+	}
 
 #ifdef __linux__
 	// Sets if the TenTrillion should acquire the current DRM display.
@@ -81,6 +104,13 @@ class tenvulkan {
 	// the current windowing manager.
 	tenvulkan::tenvulkan_drm_control is_acquire_drm{
 		tenvulkan_drm_control::NoControl};
+
+	/**
+	 * @brief Flag for the current windowing manager of the TenTrillion.
+	 *
+	 */
+	tenvulkan::tenvulkan_windowing_manager windowing_manager{
+		tenvulkan_windowing_manager::NoWindowingManagerSpecified};
 #endif
 };
 

@@ -1,6 +1,7 @@
 #include "tenvulkan.hpp"
 #include "tentrillion_constants.hpp"
 #include "tenvulkan_device.hpp"
+#include "tenvulkan_errors.hpp"
 #include "tenvulkan_queue.hpp"
 #include <algorithm>
 #include <cstdint>
@@ -21,9 +22,19 @@
 #endif
 
 tenvulkan::tenvulkan() {
+#ifdef __linux__
+	if (auto xdg_session_type = std::getenv("XDG_SESSION_TYPE");
+		xdg_session_type == nullptr) {
+		throw tentrillion_no_xdg_session(
+			"The TenTrillion does not support non-xdg sessions.");
+	} else if (strcmp(xdg_session_type, "wayland") == 0)
+		this->windowing_manager = tenvulkan_windowing_manager::Wayland;
+	else
+		this->windowing_manager = tenvulkan_windowing_manager::XWindowSystem;
+#endif
+
 	this->tenvulkan_device_manager = std::make_unique<tenvulkan_device>(this);
-	this->tenvulkan_queue_manager =
-		std::make_unique<tenvulkan_queue>(this->tenvulkan_device_manager.get());
+	this->tenvulkan_queue_manager = std::make_unique<tenvulkan_queue>(this);
 }
 
 tenvulkan::~tenvulkan() {
@@ -59,7 +70,7 @@ void tenvulkan::vk_select_extensions(
 	} else {
 		if (this->is_acquire_drm ==
 				tenvulkan::tenvulkan_drm_control::X11DisplayControl &&
-			strcmp(std::getenv("XDG_SESSION_TYPE"), "wayland") == 0) {
+			this->windowing_manager == tenvulkan_windowing_manager::Wayland) {
 			// If the current session is detected as Wayland, do not
 			// use the declining in functionality X11 extension.
 			// For all the other old timers using X11, this
@@ -132,8 +143,8 @@ bool tenvulkan::vk_create_instance(const char *application_name,
 
 	vkCreateInstance(&this->vk_instance_info, nullptr, &this->vk_instance);
 
-	// Load the Vulkan instance with Volk. This is meant for compatibility and
-	// doesn't really involve optimization.
+	// Load the Vulkan instance with Volk. This is meant for compatibility
+	// and doesn't really involve optimization.
 	volkLoadInstance(this->vk_instance);
 
 	return true;

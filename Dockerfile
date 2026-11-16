@@ -1,4 +1,4 @@
-FROM alpine:3.24 AS build
+FROM alpine:3.25
 WORKDIR /compile
 RUN apk update && apk add cmake build-base vulkan-headers \
     vulkan-loader-dev vulkan-tools \

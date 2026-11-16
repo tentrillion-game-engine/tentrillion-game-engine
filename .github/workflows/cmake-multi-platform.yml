@@ -65,12 +65,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libopenal-dev
 
-      - name: Configure CMake
+      - name: Configure CMake to compile core engine components
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DTENTRILLION_COMPILE_EDITOR=OFF
           -S ${{ github.workspace }}
 
       - name: Build

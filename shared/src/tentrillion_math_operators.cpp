@@ -1,5 +1,4 @@
 #include "tentrillion_math.hpp"
-#include <cmath>
 
 /**
  * These are the generator preprocessors for the TenTrillion Math Library
