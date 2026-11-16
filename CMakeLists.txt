@@ -53,11 +53,13 @@ if(${TENTRILLION_COMPILE_COMPAT})
   )
 endif()
 
-if(LINUX)
-  if(${TENTRILLION_COMPILE_COMPAT} AND ${TENTRILLION_COMPILE_OPENGL} AND ${TENTRILLION_COMPILE_VULKAN})
-    add_subdirectory(editor)
+if(${TENTRILLION_COMPILE_EDITOR})
+  if(LINUX)
+    if(${TENTRILLION_COMPILE_COMPAT} AND ${TENTRILLION_COMPILE_OPENGL} AND ${TENTRILLION_COMPILE_VULKAN})
+      add_subdirectory(editor)
+    endif()
+  elseif(WIN32)
+  # TODO
   endif()
-elseif(WIN32)
-# TODO
 endif()
 
