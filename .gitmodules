@@ -1,6 +1,3 @@
-[submodule "glfw"]
-	path = libs/glfw
-	url = https://github.com/glfw/glfw.git
 [submodule "json"]
 	path = libs/json
 	url = https://github.com/nlohmann/json.git
@@ -13,3 +10,6 @@
 [submodule "compat/libs/SDL-1.2"]
 	path = compat/libs/SDL-1.2
 	url = https://github.com/libsdl-org/SDL-1.2.git
+[submodule "libs/tentrillion-customary-glfw"]
+	path = libs/tentrillion-customary-glfw
+	url = https://github.com/tentrillion-game-engine/tentrillion-customary-glfw.git

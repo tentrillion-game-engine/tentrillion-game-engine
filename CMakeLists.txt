@@ -25,7 +25,7 @@ if(CMAKE_BUILD_TYPE EQUAL "Debug")
 endif()
 
 
-add_subdirectory(libs/glfw EXCLUDE_FROM_ALL)
+add_subdirectory(libs/tentrillion-customary-glfw EXCLUDE_FROM_ALL)
 add_subdirectory(libs/json EXCLUDE_FROM_ALL)
 
 # Compiles the TenTrillion Error Reporter, the application responsible for managing when the TenTrillion crashes unexpectedly.
