@@ -22,3 +22,4 @@ target_include_directories(${TENTRILLION_VULKAN_LIBRARY} PUBLIC
       $<INSTALL_INTERFACE:/include/vulkan>
 )
 target_link_libraries(${TENTRILLION_VULKAN_LIBRARY} glfw volk::volk)
+target_compile_definitions(${TENTRILLION_VULKAN_LIBRARY} PUBLIC TENTRILLION_VULKAN)

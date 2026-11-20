@@ -7,9 +7,9 @@
 
 class tentrillion_window {
   public:
-	static tentrillion_window *create_context(const char *application_title,
-											  const int32_t &window_width,
-											  const int32_t &window_height);
+	tentrillion_window(const char *application_title,
+					   const int32_t &window_width,
+					   const int32_t &window_height);
 
   private:
 	int32_t window_width;

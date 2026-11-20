@@ -1,21 +1,25 @@
 #include "tentrillion_window.hpp"
+#include "GLFW/glfw3.h"
 
 #include <cstdint>
 
 #include <tentrillion_constants.hpp>
 
-tentrillion_window *
-tentrillion_window::create_context(const char *application_title,
-								   const int32_t &window_width,
-								   const int32_t &window_height) {
-	auto *tentrillion_window = new class tentrillion_window();
+tentrillion_window::tentrillion_window(const char *application_title,
+									   const int32_t &window_width,
+									   const int32_t &window_height) {
 
-	tentrillion_window->window_width = window_width;
-	tentrillion_window->window_height = window_height;
+	this->window_width = window_width;
+	this->window_height = window_height;
 
-#ifdef TENTRILLIONGAMEENGINE_TENVULKAN_HPP
-// TODO
+	if (!glfwInit()) {
+		// TODO
+	}
+#ifdef TENTRILLION_VULKAN
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 #endif
 
-	return tentrillion_window;
+#ifdef TENTRILLION_OPENGL
+
+#endif
 }
