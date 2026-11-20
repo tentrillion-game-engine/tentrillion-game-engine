@@ -3,3 +3,6 @@ build
 
 # Ignore the generate config file.
 tentrillionConfig.h
+
+# Ignore macOS finder view settings files.
+.DS_Store

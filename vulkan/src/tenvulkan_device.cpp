@@ -18,6 +18,8 @@ tenvulkan_device::tenvulkan_device(class tenvulkan *tenvulkan_pointer) {
 	this->scan_available_vk_devices();
 }
 
+tenvulkan_device::~tenvulkan_device() = default;
+
 bool tenvulkan_device::vk_create_device() { return true; }
 bool tenvulkan_device::vk_create_device(const int &device_id) {
 	// TODO

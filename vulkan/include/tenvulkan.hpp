@@ -43,6 +43,7 @@ class tenvulkan {
 	 */
 	VkInstance &get_vk_instance() { return this->vk_instance; }
 
+#ifdef __linux__
 	/**
 	 * @brief Get the current windowing manager.
 	 *
@@ -53,7 +54,6 @@ class tenvulkan {
 		return this->windowing_manager;
 	}
 
-#ifdef __linux__
 	// Sets if the TenTrillion should acquire the current DRM display.
 	// This will be make the TenTrillion faster, but should be specified by the
 	// application in use case.

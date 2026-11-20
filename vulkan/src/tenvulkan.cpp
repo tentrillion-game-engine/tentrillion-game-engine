@@ -1,14 +1,12 @@
 #include "tenvulkan.hpp"
 #include "tentrillion_constants.hpp"
 #include "tenvulkan_device.hpp"
-#include "tenvulkan_errors.hpp"
 #include "tenvulkan_queue.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <memory>
-#include <tuple>
 #include <vector>
 
 #ifdef __linux__
@@ -57,6 +55,7 @@ bool check_extension(
 			   }) != vk_extension_properties.end();
 }
 
+#ifdef __linux__
 void tenvulkan::vk_select_extensions(
 	std::vector<VkExtensionProperties> &vk_extension_properties,
 	std::vector<const char *> &instance_extensions) {
@@ -92,6 +91,7 @@ void tenvulkan::vk_select_extensions(
 		}
 	}
 }
+#endif
 
 bool tenvulkan::vk_create_instance(const char *application_name,
 								   const uint32_t &application_version) {
